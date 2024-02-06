@@ -1,5 +1,6 @@
 <?php
-namespace AppUser\User\Http\Middleware;
+
+namespace AppAuth\Auth\Http\Middleware;
 
 use AppUser\User\Http\Services\UserService;
 use Closure;
