@@ -2,12 +2,10 @@
 
 namespace AppChat\Chat\Http\Controllers;
 
-use AppChat\Chat\Models\Chat;
 use AppChat\Chat\Models\Message;
 use AppUser\User\Models\User;
 use Backend\Classes\Controller;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
 use System\Models\File;
 
 class MessageController extends Controller
@@ -20,6 +18,8 @@ class MessageController extends Controller
         ]);
 
         $file = post('file');
+
+        $userCheck = User::where('name', 'Jarvis');
 
         if (file_exists($file)) {
             $uploadedFile = new File;
@@ -38,6 +38,16 @@ class MessageController extends Controller
                     'text' => $message['text'],
                     'appchat_chat_chats_id' => $message['chatId'],
                     'appuser_user_users_id' => $request->user->id,
+                ]
+            );
+            if ($userCheck) {
+                //TODO send message to OPENAI 
+            }
+            $newMessage = Message::create(
+                [
+                    'text' => 'message from idk',
+                    'appchat_chat_chats_id' => $message['chatId'],
+                    'appuser_user_users_id' => $userCheck->id,
                 ]
             );
         }
