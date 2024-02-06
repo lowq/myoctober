@@ -2,7 +2,6 @@
 
 namespace AppUser\User;
 
-use AppUser\User\Http\Middleware\Authenticate;
 use System\Classes\PluginBase;
 
 /**
@@ -30,7 +29,6 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-            $this->app['router']->aliasMiddleware('userAutheticate', Authenticate::class);
     }
 
     /**

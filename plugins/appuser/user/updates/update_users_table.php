@@ -19,8 +19,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('appuser_user_users', function (Blueprint $table) {
-            $table->string('google_token');
-            $table->string('google_refresh_token');
+            $table->string('google_token')->nullable();
+            $table->string('google_refresh_token')->nullable();
+            $table->integer('age')->nullable();
+            $table->string('password')->nullable();
         });
     }
 

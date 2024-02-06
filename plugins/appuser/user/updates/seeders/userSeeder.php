@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('appuser_user_users')->insert([
             'name' => 'Jarvis',
+            'username'=> 'Jarvis',
             'email' => 'jarvis@openai.com'
         ]);
     }

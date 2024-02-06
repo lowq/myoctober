@@ -12,7 +12,6 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        // Validácia dát
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -21,14 +20,13 @@ class AuthController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        // Vytvorenie nového uzívateľa
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'age' => $request->age,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'token' => str_random(50), // Vytvorenie náhodného tokenu
+            'token' => str_random(50),
         ]);
 
         return response()->json(['token' => $user->token]);
@@ -36,13 +34,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validácia dát
         $request->validate([
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Overenie prihlasovacích údajov
         $user = User::where('username', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {

@@ -7,6 +7,7 @@ use AppUser\User\Models\User;
 use Backend\Classes\Controller;
 use Illuminate\Http\Request;
 use System\Models\File;
+use OpenAI\Laravel\Facades\OpenAI;
 
 class MessageController extends Controller
 {
@@ -19,7 +20,7 @@ class MessageController extends Controller
 
         $file = post('file');
 
-        $userCheck = User::where('name', 'Jarvis');
+        $userCheck = User::where('username', 'Jarvis');
 
         if (file_exists($file)) {
             $uploadedFile = new File;
@@ -41,15 +42,22 @@ class MessageController extends Controller
                 ]
             );
             if ($userCheck) {
-                //TODO send message to OPENAI 
+                //TODO send message to OPENAI
+                $result = OpenAI::chat()->create([
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'user', 'content' => $message['text']],
+                    ],
+                ]);
+                $newMessage = Message::create(
+                    [
+                        'text' => $result->choices[0]->message->content,
+                        'appchat_chat_chats_id' => $message['chatId'],
+                        'appuser_user_users_id' => $userCheck->id,
+                    ]
+                );
             }
-            $newMessage = Message::create(
-                [
-                    'text' => 'message from idk',
-                    'appchat_chat_chats_id' => $message['chatId'],
-                    'appuser_user_users_id' => $userCheck->id,
-                ]
-            );
+
         }
 
         return response()->json($newMessage);

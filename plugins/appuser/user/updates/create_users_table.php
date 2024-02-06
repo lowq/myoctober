@@ -22,9 +22,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->integer('age');
+            $table->integer('age')->nullable();
             $table->string('username')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('token')->nullable()->unique();
             $table->timestamps();
         });

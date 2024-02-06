@@ -2,6 +2,7 @@
 
 namespace AppAuth\Auth;
 
+use AppAuth\Auth\Http\Middleware\Authenticate;
 use Backend;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\GoogleProvider;
@@ -34,8 +35,12 @@ class Plugin extends PluginBase
             return Socialite::buildProvider(GoogleProvider::class, [
                 'client_id' => env('GOOGLE_CLIENT_ID'),
                 'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-                'redirect' => env('GOOGLE_REDIRECT'),
+                'redirect' => env('GOOGLE_CALLBACK_URL'),
             ]);
         });
+
+        $this->app['router']->aliasMiddleware('userAutheticate', Authenticate::class);
     }
+
+
 }
