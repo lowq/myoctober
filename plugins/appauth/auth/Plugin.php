@@ -31,9 +31,11 @@ class Plugin extends PluginBase
     public function boot()
     {
         Socialite::extend('google', function ($app) {
-            $config = $this->app['config']['services.google'];
-
-            return Socialite::buildProvider(GoogleProvider::class, $config);
+            return Socialite::buildProvider(GoogleProvider::class, [
+                'client_id' => env('GOOGLE_CLIENT_ID'),
+                'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+                'redirect' => env('GOOGLE_REDIRECT'),
+            ]);
         });
     }
 }
