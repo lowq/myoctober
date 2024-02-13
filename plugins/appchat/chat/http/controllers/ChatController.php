@@ -21,9 +21,8 @@ class ChatController extends Controller
         ]);
 
         $partnerUser = User::where('id', $data['chatPartner'])->first();
-        $creatingUser = User::where('id', $request->user->id)->first();
 
-        $chat->users()->attach([$partnerUser->id, $creatingUser->id]);
+        $chat->users()->attach([$partnerUser->id, $request->user->id]);
 
         return response()->json($chat);
     }

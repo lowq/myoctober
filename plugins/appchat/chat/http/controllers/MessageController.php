@@ -2,6 +2,7 @@
 
 namespace AppChat\Chat\Http\Controllers;
 
+use AppChat\Chat\Models\Chat;
 use AppChat\Chat\Models\Message;
 use AppUser\User\Models\User;
 use Backend\Classes\Controller;
@@ -22,37 +23,40 @@ class MessageController extends Controller
 
         $userCheck = User::where('username', 'Jarvis');
 
+        $chat = Chat::where('id', $message['chatId'])->first();
+
         if (file_exists($file)) {
             $uploadedFile = new File;
             $uploadedFile->data = $file; // The uploaded file data
             $uploadedFile->save();
-            $newMessage = Message::create(
+
+            //TODO use october cms attach
+
+
+            $newMessage = $chat->messages()->create(
                 [
                     'fileId' => $uploadedFile->id,
-                    'appchat_chat_chats_id' => $message['chatId'],
                     'appuser_user_users_id' => $request->user->id,
                 ]
             );
         } else {
-            $newMessage = Message::create(
+            $newMessage = $chat->messages()->create(
                 [
                     'text' => $message['text'],
-                    'appchat_chat_chats_id' => $message['chatId'],
                     'appuser_user_users_id' => $request->user->id,
                 ]
             );
-            if ($userCheck) {
-                //TODO send message to OPENAI
+            if ($chat->users()->where('id',$userCheck->id)->findOrFail()) {
+                //send message to OPENAI
                 $result = OpenAI::chat()->create([
                     'model' => 'gpt-3.5-turbo',
                     'messages' => [
                         ['role' => 'user', 'content' => $message['text']],
                     ],
                 ]);
-                $newMessage = Message::create(
+                $newMessage = $chat->messages()->create(
                     [
                         'text' => $result->choices[0]->message->content,
-                        'appchat_chat_chats_id' => $message['chatId'],
                         'appuser_user_users_id' => $userCheck->id,
                     ]
                 );

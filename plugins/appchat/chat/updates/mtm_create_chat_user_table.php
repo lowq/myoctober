@@ -19,9 +19,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('appchat_chat_chat_user', function (Blueprint $table) {
-            $table->integer('appchat_chat_chats_id')->unsigned();
-            $table->integer('appuser_user_users_id')->unsigned();
-            $table->primary(['appchat_chat_chats_id', 'appuser_user_users_id']);
+            $table->integer('chats_id')->unsigned();
+            $table->integer('users_id')->unsigned();
+            $table->primary(['chats_id', 'users_id']);
         });
     }
 

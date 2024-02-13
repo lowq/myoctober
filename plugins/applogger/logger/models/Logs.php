@@ -12,7 +12,7 @@ use Model;
  */
 class Logs extends Model
 {
-    protected $fillable = ['datetime', 'appuser_user_users_id', 'delay'];
+    protected $fillable = ['datetime', 'users_id', 'delay'];
 
     protected $dates = ['datetime'];
 

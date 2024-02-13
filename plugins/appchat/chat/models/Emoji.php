@@ -26,6 +26,6 @@ class Emoji extends Model
     protected $fillable = ['name', 'icon'];
 
     public $belongsToMany = [
-        'messages' => ['AppChat\Chat\Models\Message', 'table' => 'appchat_chat_messages_emojis'], 'pivot' => ['count']
+        'messages' => [\AppChat\Chat\Models\Message::class, 'table' => 'appchat_chat_messages_emojis'], 'pivot' => ['count']
     ];
 }

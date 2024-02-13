@@ -10,12 +10,12 @@ class Authenticate
 {
     public function handle($request, Closure $next)
     {
-        $authorizationHeader = $request->header('Authorization');
+        $authorizationHeader = request()->bearerToken();
         if (Str::startsWith($authorizationHeader, 'Bearer ')) {
             $token = Str::substr($authorizationHeader, 7); // Remove 'Bearer ' from the beginning
         } else {
             // Handle the case where the header doesn't start with 'Bearer '
-            $token = null;
+            throw new \Exception('Bad token');
         }
 
         $user = UserService::getAutheticatedUser($token);

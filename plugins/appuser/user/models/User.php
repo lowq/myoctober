@@ -19,12 +19,12 @@ class User extends Model
     public $table = 'appuser_user_users';
 
     protected $fillable = [
-        'name', 'email', 'age', 'username', 'password', 'token', 'google_token', 'google_refresh_token'
+        'name', 'email', 'age', 'username', 'password'
         // Add other user information fields as needed
     ];
 
     protected $hidden = [
-        'password', 'token'
+        'password', 'token', 'google_token', 'google_refresh_token'
         // Hide other sensitive fields as needed
     ];
 

@@ -15,7 +15,7 @@ class LogsController extends Controller
             'delay' => 'required|integer',
         ]);
 
-        $log = Logs::create([
+        $log = $request->user->create([
             'datetime' => now(),
             'appuser_user_users_id' => $request->user->id,
             'delay' => $data['delay'],
@@ -32,13 +32,13 @@ class LogsController extends Controller
 
     public function getLogByUsername($username)
     {
-        $user = User::where('username', $username)->first();
+        $user = User::where('username', $username)->firstOrFail();
 
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
 
-        $logs = Logs::where('appuser_user_users_id', $user->id)->get();
+        $logs = Logs::where('appuser_user_users_id', $user->id)->findOrFail();
         return response()->json($logs);
     }
 }

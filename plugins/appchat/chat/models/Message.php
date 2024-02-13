@@ -18,7 +18,7 @@ class Message extends Model
      */
     public $table = 'appchat_chat_messages';
 
-    protected $fillable = ['text', 'fileId', 'appchat_chat_chats_id', 'appuser_user_users_id'];
+    protected $fillable = ['text', 'fileId', 'chats_id', 'users_id'];
 
     public function chat()
     {
@@ -33,8 +33,8 @@ class Message extends Model
     public $belongsToMany = [
         'emojis' => [
             \AppChat\Chat\Models\Emoji::class, 'table' => 'appchat_chat_messages_emojis',
-            'key' => 'appchat_chat_messages_id',
-            'otherKey' => 'appchat_chat_emoji_id'
+            'key' => 'messages_id',
+            'otherKey' => 'emoji_id'
         ], 'pivot' => ['count']
     ];
 }

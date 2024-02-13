@@ -20,9 +20,9 @@ return new class extends Migration
     {
         Schema::table('appchat_chat_messages_emojis', function (Blueprint $table) {
             $table->integer('count')->default(0);
-            $table->integer('appchat_chat_messages_id')->unsigned();
-            $table->integer('appchat_chat_emoji_id')->unsigned();
-            $table->primary(['appchat_chat_messages_id', 'appchat_chat_emoji_id']);
+            $table->integer('messages_id')->unsigned();
+            $table->integer('emoji_id')->unsigned();
+            $table->primary(['messages_id', 'emoji_id']);
         });
     }
 
