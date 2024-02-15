@@ -39,6 +39,8 @@ class MessageController extends Controller
                     'appuser_user_users_id' => $request->user->id,
                 ]
             );
+
+            return response()->json($newMessage);
         } else {
             $newMessage = $chat->messages()->create(
                 [
@@ -60,11 +62,13 @@ class MessageController extends Controller
                         'appuser_user_users_id' => $userCheck->id,
                     ]
                 );
+
+                return response()->json($newMessage);
             }
 
+            return response()->json($newMessage);
         }
 
-        return response()->json($newMessage);
     }
 
     public function getMessagesByChatId($chat_id)

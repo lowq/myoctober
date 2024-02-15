@@ -12,9 +12,8 @@ class Authenticate
     {
         $authorizationHeader = request()->bearerToken();
         if (Str::startsWith($authorizationHeader, 'Bearer ')) {
-            $token = Str::substr($authorizationHeader, 7); // Remove 'Bearer ' from the beginning
+            $token = Str::substr($authorizationHeader, 7);
         } else {
-            // Handle the case where the header doesn't start with 'Bearer '
             throw new \Exception('Bad token');
         }
 

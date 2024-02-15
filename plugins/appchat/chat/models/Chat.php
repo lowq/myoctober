@@ -22,6 +22,7 @@ class Chat extends Model
     {
         return $this->hasMany(Message::class);
     }
+
     public $timestamps = false;
 
     public $belongsToMany = [

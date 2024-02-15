@@ -73,7 +73,6 @@ class AuthController extends Controller
                 'token' => str_random(50),
             ]);
 
-
             return response()->json($newUser->token);
         }
     }
